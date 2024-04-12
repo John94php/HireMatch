@@ -14,7 +14,7 @@ Each of these parts will have its own README.md, where the functionality and app
 <p>README will be gradually supplemented</p>
 
 <h2>
-<img src="https://img.shields.io/github/created-at/John94php/HireMatch" />
+<img src="https://img.shields.io/github/created-at/John94php/HireMatch?style=plastic&logo=github" />
 </h2>
 
 <h2>
