@@ -31,6 +31,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column]
+    private ?bool $is_candidate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,5 +107,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function isCandidate(): ?bool
+    {
+        return $this->is_candidate;
+    }
+
+    public function setCandidate(bool $is_candidate): static
+    {
+        $this->is_candidate = $is_candidate;
+
+        return $this;
     }
 }
