@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class LoginController extends AbstractController
 {
@@ -21,23 +22,16 @@ class LoginController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/api_login', name: 'app_api_login')]
-    public function login(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
-{
-    $data = json_decode($request->getContent(), true);
-
-    $email = $data['email'];
-    $password = $data['password'];
-
-    $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-
-    if (!$user) {
-        throw new BadCredentialsException('Invalid credentials');
+    public function login(#[CurrentUser] ?User $user): Response
+    {
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        $email = $user->getEmail();
+        return $this->json([
+            'email' => $email
+        ]);
     }
-
-    if (!$passwordEncoder->isPasswordValid($user, $password)) {
-        throw new BadCredentialsException('Invalid credentials');
-    }
-
-    return new JsonResponse(['status' => 'Logged in successfully'], Response::HTTP_OK);
-}
 }

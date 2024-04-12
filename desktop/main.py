@@ -1,5 +1,6 @@
 import wx
-
+import requests
+import json
 
 class LoginForm(wx.Dialog):
     def __init__(self, parent, *args, **kw):
@@ -30,10 +31,22 @@ class LoginForm(wx.Dialog):
     def on_login(self, event):
         username = self.username_text.GetValue()
         password = self.password_text.GetValue()
-        if username == "admin" and password == "admin":
-            self.EndModal(wx.ID_OK)
+        if username and password:
+            data = {'username': username, 'password': password}
+            url = 'https://hirematch.xce.pl/api_login'
+            response = requests.post(url, json=data)
+            print(response.status_code)
+            if response.status_code == 200:
+                response_data = response.content.decode('utf-8')
+                response_json = json.loads(response_data)
+                if 'status' in response_json:
+                    status = response_json['status']
+                    wx.MessageBox(status, "Success", wx.OK | wx.ICON_INFORMATION)
+                self.EndModal(wx.ID_OK)
+            else:
+                wx.MessageBox("Error connecting to server", "Error", wx.OK | wx.ICON_ERROR)
         else:
-            wx.MessageBox("Invalid username or password", "Error", wx.OK | wx.ICON_ERROR)
+            wx.MessageBox("Please enter both username and password", "Error", wx.OK | wx.ICON_AUTH_NEEDED)
 
 
 class MainFrame(wx.Frame):
