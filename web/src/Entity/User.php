@@ -33,8 +33,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?bool $is_candidate = null;
+    #[ORM\Column(type:"boolean")]
+    private $is_candidate;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -119,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->is_candidate;
     }
 
-    public function setCandidate(bool $is_candidate): static
+    public function setCandidate(bool $is_candidate): self
     {
         $this->is_candidate = $is_candidate;
 

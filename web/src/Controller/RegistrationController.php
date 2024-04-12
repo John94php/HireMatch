@@ -17,6 +17,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegistrationController extends AbstractController
 {
@@ -25,40 +28,45 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface  $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils): Response
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
+        $email = $request->request->get('email');
+        $password = $request->request->get('password');
+        $isCandidate = $request->request->get('is_candidate');
+        $terms = $request->request->get('terms');
+        if ($email && $password && $isCandidate !== null && $terms) {
+            $user->setEmail($email);
+            $user->setPassword($userPasswordHasher->hashPassword($user, $password));
+            $user->setCandidate((bool) $isCandidate);
             $entityManager->persist($user);
             $entityManager->flush();
-
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('info@hirematch.xce.pl', 'Hire Match InfoBot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
-            // do anything else you need here, like send an email
+            $token = new UsernamePasswordToken($user, $user->getPassword(), ['main'], [$user->getRoles()[0]]);
 
             return $security->login($user, 'form_login', 'main');
+    
+            // Logujemy użytkownika
+            $security->getToken()->setUser($user);
+            return new RedirectResponse($this->generateUrl('app_home'));
+
         }
 
+
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'error' => $error
+
         ]);
     }
 

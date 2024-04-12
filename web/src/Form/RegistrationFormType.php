@@ -11,12 +11,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('is_candidate', ChoiceType::class, [
+            'choices' => [
+                'Kandydat' => 0,
+                'Firma' => 1,
+            ],
+            'expanded' => true,
+            'label' => 'Typ użytkownika',
+            'data' => 0, // Ustaw domyślną wartość na "Kandydat"
+
+        ])
+
             ->add('email',null,[
                 'attr' => ['class'=> 'form-control']
             ])
