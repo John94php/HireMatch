@@ -1,5 +1,4 @@
 # HireMatch
-<i class="fab fa-github"></i> - dla Font Awesome
 
 Due to the fact that I am more or less familiar with technologies such as:
 PHP (Symfony)
