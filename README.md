@@ -15,8 +15,14 @@ Each of these parts will have its own README.md, where the functionality and app
 <p>README will be gradually supplemented</p>
 
 <h2>
- Start of project - 12.04.2024
+<img src="https://img.shields.io/github/created-at/John94php/HireMatch" />
 </h2>
 
-<h2>End of project - unknown</h2>
-<h2>Developmnet - <span style="color: #FFA500">in progress</span></h2>
+<h2>
+<img src="https://img.shields.io/github/commit-activity/w/John94php/HireMatch"/>
+</h2>
+<h2>
+<img src="https://img.shields.io/github/languages/code-size/John94php/HireMatch" />
+</h2>
+<h2>
+<img src="https://img.shields.io/badge/development-in_progress-orange" />
