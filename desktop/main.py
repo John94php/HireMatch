@@ -30,13 +30,8 @@ class LoginForm(wx.Dialog):
     def on_login(self, event):
         username = self.username_text.GetValue()
         password = self.password_text.GetValue()
-
-        # Tutaj umieść logikę sprawdzającą poprawność danych logowania,
-        # np. wysłanie żądania POST do serwera i sprawdzenie odpowiedzi.
-
-        # Tymczasowo używamy prostego sprawdzenia poprawności
         if username == "admin" and password == "admin":
-            self.EndModal(wx.ID_OK)  # Zamknięcie okna logowania
+            self.EndModal(wx.ID_OK)
         else:
             wx.MessageBox("Invalid username or password", "Error", wx.OK | wx.ICON_ERROR)
 
@@ -62,7 +57,7 @@ class MainFrame(wx.Frame):
         self.SetMenuBar(menubar)
 
     def on_logout(self, event):
-        self.Close()  # Zamknięcie okna MainFrame
+        self.Close()
         login_form = LoginForm(None)
         if login_form.ShowModal() == wx.ID_OK:
             main_frame = MainFrame(None)
