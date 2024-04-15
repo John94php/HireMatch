@@ -1,0 +1,13 @@
+{
+  "tabWidth": 2,
+  "useTabs": true,
+  "overrides": [
+    {
+      "files": "*.html.twig",
+      "options": {
+        "parser": "html",
+        "htmlWhitespaceSensitivity": "strict"
+      }
+    }
+  ]
+}

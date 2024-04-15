@@ -1,28 +1,29 @@
-(function($) {
-  "use strict"; // Start of use strict
+$(function() {
+"use strict"; // Start of use strict
 
-  // Toggle the side navigation
-  $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
-    $("body").toggleClass("sidebar-toggled");
-    $(".sidebar").toggleClass("toggled");
-    if ($(".sidebar").hasClass("toggled")) {
-      $('.sidebar .collapse').collapse('hide');
-    };
-  });
+// Toggle the side navigation
+$("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
+  $("body").toggleClass("sidebar-toggled");
+  $(".sidebar").toggleClass("toggled");
+  if ($(".sidebar").hasClass("toggled")) {
+    $('.sidebar .collapse').collapse('hide');
+  }
+});
 
-  // Close any open menu accordions when window is resized below 768px
-  $(window).resize(function() {
-    if ($(window).width() < 768) {
-      $('.sidebar .collapse').collapse('hide');
-    };
-    
-    // Toggle the side navigation when window is resized below 480px
-    if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
-      $("body").addClass("sidebar-toggled");
-      $(".sidebar").addClass("toggled");
-      $('.sidebar .collapse').collapse('hide');
-    };
-  });
+// Close any open menu accordions when window is resized below 768px
+$(window).resize(function() {
+  // Na urządzeniach desktopowych i tabletach sidebar jest domyślnie otwarty
+  if ($(window).width() >= 768) {
+    $("body").removeClass("sidebar-toggled");
+    $(".sidebar").removeClass("toggled");
+    $('.sidebar .collapse').collapse('show');
+  } else {
+    // Na urządzeniach mobilnych sidebar jest domyślnie schowany
+    $("body").addClass("sidebar-toggled");
+    $(".sidebar").addClass("toggled");
+    $('.sidebar .collapse').collapse('hide');
+  }
+});
 
   // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
   $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
@@ -53,4 +54,4 @@
     e.preventDefault();
   });
 
-})(jQuery); // End of use strict
+});
