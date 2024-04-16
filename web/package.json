@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.24.1",
+    "@hotwired/stimulus": "^3.0.0",
+    "@hotwired/turbo": "^7.1.1 || ^8.0",
+    "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
+    "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
+    "@symfony/webpack-encore": "^1.0.0",
+    "webpack-notifier": "^1.6.0"
+  },
+  "scripts": {
+    "dev": "encore dev",
+    "build": "encore production",
+    "watch": "encore dev --watch",
+    "hot": "encore dev-server"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.24.1",
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "core-js": "^3.36.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
