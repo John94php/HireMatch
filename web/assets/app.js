@@ -10,4 +10,5 @@ import './styles/app.css';
 import { registerReactControllerComponents } from '@symfony/ux-react';
 registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
 
-console.log('test')
+import 'bootstrap/dist/css/bootstrap.min.css';
+
