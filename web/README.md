@@ -1,8 +1,2 @@
 # Symfony
-
-<p>Symfony v7.0.6</p>
-<h1>Entites</h1>
-<ul>
-<li>User</li>
-<li>Company</li>
-<li>Offer</li>
+<h2>This App uses <img src="symfony-logo.png" height="30" alt="Symfony" /> as backend and <img src="react-logo.jpg" height="30"/> as frontend</h1>
