@@ -31,6 +31,7 @@ class LoginController extends AbstractController
         }
         $email = $user->getEmail();
         return $this->json([
+            'status' => 'Success',
             'email' => $email
         ]);
     }
